@@ -22,9 +22,19 @@ struct lectura{
     
 };  
 
+struct lecturaf{
+
+    double f1;
+    double f2;
+    double f3;
+    double f4;
+    
+}; 
+
 int cont = 0;
-int mat[numerox][numeroy];
+int mat[numerox][numeroy] = {0};
 struct lectura lector[TAM2];
+struct lecturaf lectorf[TAM2];
 
 void dibujadoppm();
 void lineasdda(double xi, double xf, double yi, double yf, double zi, double zf);
@@ -35,13 +45,6 @@ void dibujar1();
 int main()
 {
     system("cls");
-
-    for(int i=0; i<=numerox; i++){
-        for(int j=0; j<=numeroy; j++){
-            mat[i][j]= 0;
-        }
-    }
-
 	dibujadoppm();
     leer_archivo();
     //imprimir();
@@ -51,7 +54,7 @@ int main()
 void dibujar1(){
 
     onion = fopen(archivo, "rb");
-    char aux2[TAM], aux3[TAM];
+    char aux3[TAM];
     int f1, f2, f3, f4, i=0;
 
     while(feof(onion) == 0){
@@ -98,11 +101,11 @@ void imprimir()
 
     int i=0;
 
-    /*while(i<=cont)
+    while(i<=cont)
     {
         printf("%d.- v %f %f %f\n", i, lector[i].x, lector[i].y, lector[i].z);
         i++;
-    }*/
+    }
 
     /*for(int i=1; i<=numerox; i++){
         for(int j=1; j<=numeroy; j++){
@@ -117,7 +120,7 @@ int leer_archivo()
 {
     int i=0,j=0;
     entrada = fopen(archivo, "rb");
-    char aux2[TAM], aux3[TAM];
+    char aux3[TAM];
     double x1,y1,z1;
     x1 = y1 = z1 = 0;
 
@@ -153,6 +156,7 @@ int leer_archivo()
     //printf("%d", i);
     fclose(entrada);
 
+    return 0;
 
 }
 
@@ -180,7 +184,7 @@ void dibujadoppm(){
 
 void lineasdda(double xi, double xf, double yi, double yf, double zi, double zf){
 
-    float dx = 0, dy = 0, dz = 0, incx = 0, incy = 0, p = 0;
+    float dx = 0, dy = 0, incx = 0, incy = 0, p = 0;
     int x = 0, y = 0;
 
     dx = xf - xi;
