@@ -24,14 +24,14 @@ struct lectura{
 
 struct lecturaf{
 
-    double f1;
-    double f2;
-    double f3;
-    double f4;
+    int f1;
+    int f2;
+    int f3;
+    int f4;
     
 }; 
 
-int cont = 0;
+int cont = 0, cont2=0;
 int mat[numerox][numeroy] = {0};
 struct lectura lector[TAM2];
 struct lecturaf lectorf[TAM2];
@@ -39,6 +39,7 @@ struct lecturaf lectorf[TAM2];
 void dibujadoppm();
 void lineasdda(double xi, double xf, double yi, double yf, double zi, double zf);
 int leer_archivo();
+void leer_archivo_f();
 void imprimir();
 void dibujar1();
 
@@ -47,51 +48,40 @@ int main()
     system("cls");
 	dibujadoppm();
     leer_archivo();
-    //imprimir();
+    leer_archivo_f();
+    imprimir();
     dibujar1();
 }
 
 void dibujar1(){
 
-    onion = fopen(archivo, "rb");
-    char aux3[TAM];
     int f1, f2, f3, f4, i=0;
 
-    while(feof(onion) == 0){
-        
-        
+    while(i<cont2){
 
-        fscanf(onion, "%s %d %d %d %d", aux3, &f1, &f2, &f3, &f4);
+        f1 =  lectorf[i].f1;
+        f2 =  lectorf[i].f2;
+        f3 =  lectorf[i].f3;
+        f4 =  lectorf[i].f4;
 
-        f1--;
-        f2--;
-        f3--;
-        f4--;
+        /*printf("%s %d %d %d %d\n", aux3, f1+1, f2+1, f3+1, f4+1);
+        printf("v %f %f %f\n", lector[f1].x, lector[f1].y, lector[f1].z);
+        printf("v %f %f %f\n", lector[f2].x, lector[f2].y, lector[f2].z);
+        printf("v %f %f %f\n", lector[f3].x, lector[f3].y, lector[f3].z);
+        printf("v %f %f %f\n", lector[f4].x, lector[f4].y, lector[f4].z);*/
 
-        if(strcmp(aux3, "f")==0)
-        {
-
-            /*printf("%s %d %d %d %d\n", aux3, f1+1, f2+1, f3+1, f4+1);
-            printf("v %f %f %f\n", lector[f1].x, lector[f1].y, lector[f1].z);
-            printf("v %f %f %f\n", lector[f2].x, lector[f2].y, lector[f2].z);
-            printf("v %f %f %f\n", lector[f3].x, lector[f3].y, lector[f3].z);
-            printf("v %f %f %f\n", lector[f4].x, lector[f4].y, lector[f4].z);*/
-
-            lineasdda(lector[f1].x*60, lector[f2].x*60, lector[f1].y*60, lector[f2].y*60, lector[f1].z*60, lector[f2].z*60);
-            lineasdda(lector[f2].x*60, lector[f3].x*60, lector[f2].y*60, lector[f3].y*60, lector[f2].z*60, lector[f3].z*60);
-            lineasdda(lector[f3].x*60, lector[f4].x*60, lector[f3].y*60, lector[f4].y*60, lector[f3].z*60, lector[f4].z*60);
-            lineasdda(lector[f4].x*60, lector[f1].x*60, lector[f4].y*60, lector[f1].y*60, lector[f4].z*60, lector[f1].z*60);
-            i++;
-        }
-
-        f1 = f2 = f3 = f4 = 0;
+        lineasdda(lector[f1].x*60, lector[f2].x*60, lector[f1].y*60, lector[f2].y*60, lector[f1].z*60, lector[f2].z*60);
+        lineasdda(lector[f2].x*60, lector[f3].x*60, lector[f2].y*60, lector[f3].y*60, lector[f2].z*60, lector[f3].z*60);
+        lineasdda(lector[f3].x*60, lector[f4].x*60, lector[f3].y*60, lector[f4].y*60, lector[f3].z*60, lector[f4].z*60);
+        lineasdda(lector[f4].x*60, lector[f1].x*60, lector[f4].y*60, lector[f1].y*60, lector[f4].z*60, lector[f1].z*60);
+        i++;
 
     }
 
     dibujadoppm();
     //imprimir();
     
-    printf("Proceso finalizado operaciones de lectura: %d", cont+i);
+    printf("Proceso finalizado operaciones de lectura: %d", cont+cont2);
 
 }
 
@@ -103,16 +93,17 @@ void imprimir()
 
     while(i<=cont)
     {
-        printf("%d.- v %f %f %f\n", i, lector[i].x, lector[i].y, lector[i].z);
+        printf("v %f %f %f\n", lector[i].x, lector[i].y, lector[i].z);
         i++;
     }
 
-    /*for(int i=1; i<=numerox; i++){
-        for(int j=1; j<=numeroy; j++){
-            printf("%d", mat[i][j]);
-        }
-        printf("\n");
-    }*/
+    i=0;
+
+    while(i<cont2)
+    {
+        printf("f %d %d %d %d \n", lectorf[i].f1, lectorf[i].f2, lectorf[i].f3, lectorf[i].f4);
+        i++;
+    }
 
 }
 
@@ -157,6 +148,41 @@ int leer_archivo()
     fclose(entrada);
 
     return 0;
+
+}
+
+void leer_archivo_f(){
+
+    int i=0,j=0;
+    entrada = fopen(archivo, "rb");
+    char aux3[TAM];
+    int f1,f2,f3,f4;
+    f1 = f2 = f3 = f4 = 0;
+
+    while(feof(entrada)==0){
+
+        fscanf(entrada, "%s", aux3);
+        //fgets(aux2, 200, entrada);
+        fscanf(entrada, "%d %d %d %d", &f1, &f2, &f3, &f4);
+
+        if(strcmp(aux3, "f")==0)
+        {
+
+            lectorf[j].f1 = f1;
+            lectorf[j].f2 = f2;
+            lectorf[j].f3 = f3;
+            lectorf[j].f4 = f4;
+            
+            //printf("%d %d %d %d contador: %d\n", lectorf[j].f1, lectorf[j].f2, lectorf[j].f3, lectorf[j].f4, j+1);
+            j++;
+            cont2=j-1;
+        }     
+        i++;
+    }
+    //system("pause");
+
+    //printf("%d", i);
+    fclose(entrada);
 
 }
 
