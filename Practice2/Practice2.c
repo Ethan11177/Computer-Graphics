@@ -91,6 +91,8 @@ void imprimir()
 
     int i=0;
 
+    printf("Vetex table\n");
+
     while(i<=cont)
     {
         printf("v %f %f %f\n", lector[i].x, lector[i].y, lector[i].z);
@@ -99,9 +101,26 @@ void imprimir()
 
     i=0;
 
+    printf("---------------------------------------\nEdge table\n");
+
+    while(i<cont2){
+
+        printf("e %d %d\n", lectorf[i].f1, lectorf[i].f2); 
+        printf("e %d %d\n", lectorf[i].f2, lectorf[i].f3); 
+        printf("e %d %d\n", lectorf[i].f3, lectorf[i].f4); 
+        printf("e %d %d\n", lectorf[i].f4, lectorf[i].f1); 
+        i++;
+        
+
+    }
+
+    i=0;
+
+    printf("----------------------------------------\nSurface table\n");
+
     while(i<cont2)
     {
-        printf("f %d %d %d %d \n", lectorf[i].f1, lectorf[i].f2, lectorf[i].f3, lectorf[i].f4);
+        printf("s %d %d %d %d \n", lectorf[i].f1, lectorf[i].f2, lectorf[i].f4, lectorf[i].f3);
         i++;
     }
 
