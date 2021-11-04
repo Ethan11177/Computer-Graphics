@@ -90,6 +90,7 @@ void imprimir()
 {
 
     int i=0;
+    int edge[TAM];
 
     printf("Vetex table\n");
 
